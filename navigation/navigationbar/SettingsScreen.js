@@ -1,19 +1,14 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
-import { FIREBASE_AUTH } from '../../FirebaseConfig';
-import { signOut } from 'firebase/auth';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { auth } from '../../FirebaseConfig';
 
 
 const SettingsScreen = () => {
-    const auth = FIREBASE_AUTH;
     const user = auth.currentUser;
-    const navigation = useNavigation();
 
     const handleSignOut = async () => {
         try {
-            await signOut(auth);
-            navigation.navigate("Login")
+            await auth.signOut();
         } catch (error) {
             console.error("Sign out error: ", error);
         }

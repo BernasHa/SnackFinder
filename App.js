@@ -1,42 +1,31 @@
 // App.js
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { getAuth } from 'firebase/auth';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import LoginScreen from './app/screens/LoginScreen'; // Pfad anpassen
-import MainContainer from './navigation/MainContainer';
+import MainContainer from './app/MainContainer';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState(null);
+  // const [initializing, setInitializing] = useState(true);
 
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      setUser(user);
-      if (initializing) setInitializing(false);
-    });
+  // useEffect(() => {
+  //   const auth = getAuth();
+  //   const unsubscribe = auth.onAuthStateChanged(user => {
+  //     setUser(user);
+  //     if (initializing) setInitializing(false);
+  //   });
 
-    return unsubscribe;
-  }, [initializing]);
+  //   return unsubscribe;
+  // }, [initializing]);
 
-  if (initializing) return null;
+  // if (initializing) return null;
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {user ? (
-          <Stack.Screen name="Main" component={MainContainer} options={{ headerShown: false }} />
-        ) : (
-          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+      <View style={styles.container}>
+        <MainContainer />
+      </View>
   );
 }
 

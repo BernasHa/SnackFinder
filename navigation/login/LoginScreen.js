@@ -4,20 +4,9 @@ import { auth } from '../../FirebaseConfig'; // korrigiere den Pfad hier
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 
-const LoginScreen = () => {
+const LoginScreen = (navigation) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        navigation.navigate("MainContainer");
-      }
-    });
-
-    return unsubscribe;
-  }, []);
 
   const LogIn = async () => {
     try {

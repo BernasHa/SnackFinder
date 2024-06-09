@@ -6,12 +6,14 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore';
 export default function HomeScreen({ navigation }) {
     const [markers, setMarkers] = useState([]);
 
+
+
     useEffect(() => {
         async function fetchMarkers() {
             const db = getFirestore();
-            const markersCollection = collection(db, 'Automaten');
-            const snapshot = await getDocs(markersCollection);
-            const markersData = snapshot.docs.map(doc => doc.data());
+            const markersCollection = collection(db, 'SnacksVending');
+            const markersSnapshot = await getDocs(markersCollection);
+            const markersData = markersSnapshot.docs.map(doc => doc.data());
             setMarkers(markersData);
         }
 
@@ -23,20 +25,19 @@ export default function HomeScreen({ navigation }) {
             <MapView
                 style={styles.map}
                 initialRegion={{
-                    latitude: 52.5200, // Beispielkoordinaten für den initialen Bereich
-                    longitude: 13.4050, // Beispielkoordinaten für den initialen Bereich
+                    latitude: 52.5200,
+                    longitude: 13.4050,
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,
                 }}
             >
-                {/* Markers aus der Firestore-Datenbank verwenden */}
                 {markers.map((marker, index) => (
                     <Marker
                         key={index}
-                        coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                        coordinate={{ latitude: marker.location.latitude, longitude: marker.location.longitude }}
                         title={marker.name} // Annahme: Ihre Automaten-Dokumente haben ein Feld "name"
                         description={marker.description} // Annahme: Ihre Automaten-Dokumente haben ein Feld "description"
-                    />
+                    /> 
                 ))}
             </MapView>
         </View>
